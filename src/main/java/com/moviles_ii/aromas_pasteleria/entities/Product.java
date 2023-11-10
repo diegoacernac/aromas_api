@@ -9,42 +9,56 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "provider")
-public class Provider {
+@Table(name = "product")
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description", length = 100, nullable = false)
+    @Column(name = "name", length = 100, nullable = false)
+    private String name;
+
+    @Column(name = "description", length = 150, nullable = false)
     private String description;
 
-    @Column(name = "address", length = 255)
-    private String address;
+    @Column(name = "stock", nullable = false)
+    private int stock;
 
-    @Column(name = "phone")
-    private int phone;
+    @Column(name = "batch", length = 10, nullable = false)
+    private String batch;
 
-    @Column(name = "email", length = 100)
-    private String email;
+    @Column(name = "purchasePrice", nullable = false)
+    private double purchasePrice;
+
+    @Column(name = "salePrice", nullable = false)
+    private double salePrice;
+
+    @Column(name = "dueDate", nullable = false)
+    private Date dueDate;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId", nullable = false)
+    private Category category;
 
     @CreationTimestamp
     @Column(name = "registerDate", updatable = false, nullable = false)
     private LocalDateTime registerDate;
 
-    @Column(name = "registerUser", length = 50)
+    @Column(name = "registerUser", length = 50, nullable = false)
     private String registerUser;
 
-    @UpdateTimestamp
-    @Column(name = "updateDate")
-    private LocalDateTime updateDate;
+   @UpdateTimestamp
+   @Column(name = "updateDate")
+   private LocalDateTime updateDate;
 
     @Column(name = "updateUser", length = 50)
     private String updateUser;
