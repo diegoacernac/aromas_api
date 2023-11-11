@@ -15,24 +15,33 @@ import java.util.Date;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "product")
-public class Product {
+@Table(name = "productInventory")
+public class ProductInventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 100, nullable = false)
-    private String name;
+    @OneToOne
+    @JoinColumn(name = "productId", nullable = false)
+    private Product product;
 
-    @Column(name = "description", length = 150, nullable = false)
-    private String description;
+    @Column(name = "stock", nullable = false)
+    private int stock;
+
+    @Column(name = "batch", length = 10, nullable = false)
+    private String batch;
+
+    @Column(name = "purchasePrice", nullable = false)
+    private double purchasePrice;
+
+    @Column(name = "salePrice", nullable = false)
+    private double salePrice;
+
+    @Column(name = "dueDate", nullable = false)
+    private Date dueDate;
 
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    @ManyToOne
-    @JoinColumn(name = "categoryId", nullable = false)
-    private Category category;
 
     @CreationTimestamp
     @Column(name = "registerDate", updatable = false, nullable = false)
@@ -41,9 +50,9 @@ public class Product {
     @Column(name = "registerUser", length = 50, nullable = false)
     private String registerUser;
 
-   @UpdateTimestamp
-   @Column(name = "updateDate")
-   private LocalDateTime updateDate;
+    @UpdateTimestamp
+    @Column(name = "updateDate")
+    private LocalDateTime updateDate;
 
     @Column(name = "updateUser", length = 50)
     private String updateUser;
